@@ -358,7 +358,7 @@ namespace HVACStandAloneERV {
 				}
 			}
 
-			VerifyName( Alphas( 3 ), StandAloneERV, &StandAloneERVData::HeatExchangerName, StandAloneERVNum - 1, IsNotOK, IsBlank, "HeatExchanger:AirToAir:SensibleAndLatent" );
+			VerifyName( Alphas( 3 ), StandAloneERV, []( StandAloneERVData const& item ) { return item.HeatExchangerName; }, StandAloneERVNum - 1, IsNotOK, IsBlank, "HeatExchanger:AirToAir:SensibleAndLatent" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) Alphas( 3 ) = "xxxxx";
@@ -381,7 +381,7 @@ namespace HVACStandAloneERV {
 			StandAloneERV( StandAloneERVNum ).DesignHXVolFlowRate = HXSupAirFlowRate;
 
 			StandAloneERV( StandAloneERVNum ).SupplyAirFanName = Alphas( 4 );
-			VerifyName( Alphas( 4 ), StandAloneERV, &StandAloneERVData::SupplyAirFanName, StandAloneERVNum - 1, IsNotOK, IsBlank, "Fan:OnOff" );
+			VerifyName( Alphas( 4 ), StandAloneERV, []( StandAloneERVData const& item ) { return item.SupplyAirFanName; }, StandAloneERVNum - 1, IsNotOK, IsBlank, "Fan:OnOff" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) Alphas( 4 ) = "xxxxx";
@@ -415,7 +415,7 @@ namespace HVACStandAloneERV {
 			StandAloneERV( StandAloneERVNum ).DesignSAFanVolFlowRate = SAFanVolFlowRate;
 
 			StandAloneERV( StandAloneERVNum ).ExhaustAirFanName = Alphas( 5 );
-			VerifyName( Alphas( 5 ), StandAloneERV, &StandAloneERVData::ExhaustAirFanName, StandAloneERVNum - 1, IsNotOK, IsBlank, "Fan:OnOff Name" );
+			VerifyName( Alphas( 5 ), StandAloneERV, []( StandAloneERVData const& item ) { return item.ExhaustAirFanName; }, StandAloneERVNum - 1, IsNotOK, IsBlank, "Fan:OnOff Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) Alphas( 5 ) = "xxxxx";
@@ -526,7 +526,7 @@ namespace HVACStandAloneERV {
 				StandAloneERV( StandAloneERVNum ).ControllerNameDefined = false;
 			} else {
 				// Verify controller name in Stand Alone ERV object matches name of valid controller object
-				VerifyName( Alphas( 6 ), StandAloneERV, &StandAloneERVData::ControllerName, StandAloneERVNum - 1, IsNotOK, IsBlank, "ZoneHVAC:EnergyRecoveryVentilator:Controller Name" );
+				VerifyName( Alphas( 6 ), StandAloneERV, []( StandAloneERVData const& item ) { return item.ControllerName; }, StandAloneERVNum - 1, IsNotOK, IsBlank, "ZoneHVAC:EnergyRecoveryVentilator:Controller Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) Alphas( 6 ) = "xxxxx";
@@ -682,7 +682,7 @@ namespace HVACStandAloneERV {
 			SetOAControllerData( OutAirNum, ErrorsFound, Alphas( 1 ) );
 			SetOAControllerData( OutAirNum, ErrorsFound, _, CurrentModuleObject );
 			SetOAControllerData( OutAirNum, ErrorsFound, _, _, ControllerStandAloneERV );
-			WhichERV = FindItemInList( Alphas( 1 ), StandAloneERV, &StandAloneERVData::ControllerName );
+			WhichERV = FindItemInList( Alphas( 1 ), StandAloneERV, []( StandAloneERVData const& item ) { return item.ControllerName; } );
 			if ( WhichERV != 0 ) {
 				AirFlowRate = StandAloneERV( WhichERV ).SupplyAirVolFlow;
 				StandAloneERV( WhichERV ).ControllerIndex = OutAirNum;
@@ -1708,7 +1708,7 @@ namespace HVACStandAloneERV {
 		}
 
 		if ( SameString( ERVType, "ZoneHVAC:EnergyRecoveryVentilator" ) ) {
-			WhichERV = FindItem( ERVCtrlName, StandAloneERV, &StandAloneERVData::ControllerName );
+			WhichERV = FindItem( ERVCtrlName, StandAloneERV, []( StandAloneERVData const& item ) { return item.ControllerName; } );
 			if ( WhichERV != 0 ) {
 				AirFlowRate = StandAloneERV( WhichERV ).SupplyAirVolFlow;
 			}
@@ -1779,7 +1779,7 @@ namespace HVACStandAloneERV {
 		}
 
 		if ( SameString( ERVType, "ZoneHVAC:EnergyRecoveryVentilator" ) ) {
-			WhichERV = FindItem( ERVCtrlName, StandAloneERV, &StandAloneERVData::ControllerName );
+			WhichERV = FindItem( ERVCtrlName, StandAloneERV, []( StandAloneERVData const& item ) { return item.ControllerName; } );
 			if ( WhichERV != 0 ) {
 				AirInletNode = StandAloneERV( WhichERV ).SupplyAirInletNode;
 			}
@@ -1850,7 +1850,7 @@ namespace HVACStandAloneERV {
 		}
 
 		if ( SameString( ERVType, "ZoneHVAC:EnergyRecoveryVentilator" ) ) {
-			WhichERV = FindItem( ERVCtrlName, StandAloneERV, &StandAloneERVData::ControllerName );
+			WhichERV = FindItem( ERVCtrlName, StandAloneERV, []( StandAloneERVData const& item ) { return item.ControllerName; } );
 			if ( WhichERV != 0 ) {
 				AirInletNode = StandAloneERV( WhichERV ).ExhaustAirInletNode;
 			}

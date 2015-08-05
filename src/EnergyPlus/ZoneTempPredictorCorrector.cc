@@ -466,7 +466,7 @@ namespace ZoneTempPredictorCorrector {
 					if ( TStatObjects( Item ).ZoneListActive ) {
 						cAlphaArgs( 2 ) = Zone( ZoneList( TStatObjects( Item ).ZoneOrZoneListPtr ).Zone( Item1 ) ).Name;
 					}
-					ZoneAssigned = FindItemInList( cAlphaArgs( 2 ), TempControlledZone, &ZoneTempControls::ZoneName, TempControlledZoneNum - 1 );
+					ZoneAssigned = FindItemInList( cAlphaArgs( 2 ), TempControlledZone, []( ZoneTempControls const& item ) { return item.ZoneName; }, TempControlledZoneNum - 1 );
 					if ( ZoneAssigned == 0 ) {
 						TempControlledZone( TempControlledZoneNum ).ZoneName = cAlphaArgs( 2 );
 						TempControlledZone( TempControlledZoneNum ).ActualZoneNum = FindItemInList( cAlphaArgs( 2 ), Zone );
@@ -830,7 +830,7 @@ namespace ZoneTempPredictorCorrector {
 			GetObjectItem( cCurrentModuleObject, HumidControlledZoneNum, cAlphaArgs, NumAlphas, rNumericArgs, NumNums, IOStat, lNumericFieldBlanks, lAlphaFieldBlanks, cAlphaFieldNames, cNumericFieldNames );
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( cAlphaArgs( 1 ), HumidityControlZone, &ZoneHumidityControls::ControlName, HumidControlledZoneNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+			VerifyName( cAlphaArgs( 1 ), HumidityControlZone, []( ZoneHumidityControls const& item ) { return item.ControlName; }, HumidControlledZoneNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) cAlphaArgs( 1 ) = "xxxxx";
@@ -839,7 +839,7 @@ namespace ZoneTempPredictorCorrector {
 			// Ensure unique zone name
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( cAlphaArgs( 2 ), HumidityControlZone, &ZoneHumidityControls::ZoneName, HumidControlledZoneNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Zone Name" );
+			VerifyName( cAlphaArgs( 2 ), HumidityControlZone, []( ZoneHumidityControls const& item ) { return item.ZoneName; }, HumidControlledZoneNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Zone Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) cAlphaArgs( 2 ) = "xxxxx";
@@ -932,7 +932,7 @@ namespace ZoneTempPredictorCorrector {
 					if ( ComfortTStatObjects( Item ).ZoneListActive ) {
 						cAlphaArgs( 2 ) = Zone( ZoneList( ComfortTStatObjects( Item ).ZoneOrZoneListPtr ).Zone( Item1 ) ).Name;
 					}
-					ZoneAssigned = FindItemInList( cAlphaArgs( 2 ), ComfortControlledZone, &ZoneComfortControls::ZoneName, ComfortControlledZoneNum - 1 );
+					ZoneAssigned = FindItemInList( cAlphaArgs( 2 ), ComfortControlledZone, []( ZoneComfortControls const& item ) { return item.ZoneName; }, ComfortControlledZoneNum - 1 );
 					if ( ZoneAssigned == 0 ) {
 						ComfortControlledZone( ComfortControlledZoneNum ).ZoneName = cAlphaArgs( 2 );
 						ComfortControlledZone( ComfortControlledZoneNum ).ActualZoneNum = FindItemInList( cAlphaArgs( 2 ), Zone );
@@ -1784,7 +1784,7 @@ namespace ZoneTempPredictorCorrector {
 					if ( StagedTStatObjects( Item ).ZoneListActive ) {
 						cAlphaArgs( 2 ) = Zone( ZoneList( StagedTStatObjects( Item ).ZoneOrZoneListPtr ).Zone( Item1 ) ).Name;
 					}
-					ZoneAssigned = FindItemInList( cAlphaArgs( 2 ), StageControlledZone, &ZoneStagedControls::ZoneName, StageControlledZoneNum - 1 );
+					ZoneAssigned = FindItemInList( cAlphaArgs( 2 ), StageControlledZone, []( ZoneStagedControls const& item ) { return item.ZoneName; }, StageControlledZoneNum - 1 );
 					if ( ZoneAssigned == 0 ) {
 						StageControlledZone( StageControlledZoneNum ).ZoneName = cAlphaArgs( 2 );
 						StageControlledZone( StageControlledZoneNum ).ActualZoneNum = FindItemInList( cAlphaArgs( 2 ), Zone );
@@ -5149,7 +5149,7 @@ namespace ZoneTempPredictorCorrector {
 			GetZoneAirStatsInputFlag = false;
 		}
 		if ( NumTempControlledZones > 0 ) {
-			if ( FindItemInList( ZoneName, TempControlledZone, &ZoneTempControls::ZoneName ) > 0 ) {
+			if ( FindItemInList( ZoneName, TempControlledZone, []( ZoneTempControls const& item ) { return item.ZoneName; } ) > 0 ) {
 				HasThermostat = true;
 			} else {
 				HasThermostat = false;
@@ -5203,7 +5203,7 @@ namespace ZoneTempPredictorCorrector {
 		// FUNCTION LOCAL VARIABLE DECLARATIONS:
 		// na
 
-		return ( FindItemInList( ZoneName, ZoneEquipConfig, &EquipConfiguration::ZoneName ) > 0 );
+		return ( FindItemInList( ZoneName, ZoneEquipConfig, []( EquipConfiguration const& item ) { return item.ZoneName; } ) > 0 );
 	}
 
 	void

@@ -661,32 +661,32 @@ namespace InputProcessor {
 		return FindItemInList( String, ListOfItems, ListOfItems.isize() );
 	}
 
-	template< typename Container > // Container needs size() and operator[i] and value_type
+	template< typename Container, typename MemberVariable > // Container needs size() and operator[i] and value_type
 	inline
 	int
 	FindItemInList(
 		std::string const & String,
 		Container const & ListOfItems,
-		std::string Container::value_type::*name_p,
+		MemberVariable memberVariable,
 		int const NumItems
 	)
 	{
 		for ( typename Container::size_type i = 0, e = NumItems; i < e; ++i ) {
-			if ( String == ListOfItems[ i ].*name_p ) return int( i + 1 ); // 1-based return index
+			if ( String == memberVariable( ListOfItems[ i ] ) ) return int( i + 1 ); // 1-based return index
 		}
 		return 0; // Not found
 	}
 
-	template< typename Container > // Container needs size() and operator[i] and value_type
+	template< typename Container, typename MemberVariable > // Container needs size() and operator[i] and value_type
 	inline
 	int
 	FindItemInList(
 		std::string const & String,
 		Container const & ListOfItems,
-		std::string Container::value_type::*name_p
+		MemberVariable memberVariable
 	)
 	{
-		return FindItemInList( String, ListOfItems, name_p, ListOfItems.isize() );
+		return FindItemInList( String, ListOfItems, memberVariable, ListOfItems.isize() );
 	}
 
 	int
@@ -836,34 +836,34 @@ namespace InputProcessor {
 		return FindItem( String, ListOfItems, ListOfItems.isize() );
 	}
 
-	template< typename Container > // Container needs size() and operator[i] and value_type
+	template< typename Container, typename MemberVariable > // Container needs size() and operator[i] and value_type
 	inline
 	int
 	FindItem(
 		std::string const & String,
 		Container const & ListOfItems,
-		std::string Container::value_type::*name_p,
+		MemberVariable memberVariable,
 		int const NumItems
 	)
 	{
-		int const item_number( FindItemInList( String, ListOfItems, name_p, NumItems ) );
+		int const item_number( FindItemInList( String, ListOfItems, memberVariable, NumItems ) );
 		if ( item_number != 0 ) return item_number;
 		for ( typename Container::size_type i = 0, e = NumItems; i < e; ++i ) {
-			if ( equali( String, ListOfItems[ i ].*name_p ) ) return i + 1; // 1-based return index
+			if ( equali( String, memberVariable( ListOfItems[ i ] ) ) ) return i + 1; // 1-based return index
 		}
 		return 0; // Not found
 	}
 
-	template< typename Container > // Container needs size() and operator[i] and value_type
+	template< typename Container, typename MemberVariable > // Container needs size() and operator[i] and value_type
 	inline
 	int
 	FindItem(
 		std::string const & String,
 		Container const & ListOfItems,
-		std::string Container::value_type::*name_p
+		MemberVariable memberVariable
 	)
 	{
-		return FindItem( String, ListOfItems, name_p, ListOfItems.isize() );
+		return FindItem( String, ListOfItems, memberVariable, ListOfItems.isize() );
 	}
 
 	std::string
@@ -983,13 +983,13 @@ namespace InputProcessor {
 		}
 	}
 
-	template< typename Container > // Container needs size() and operator[i] and value_type
+	template< typename Container, typename MemberVariable > // Container needs size() and operator[i] and value_type
 	inline
 	void
 	VerifyName(
 		std::string const & NameToVerify,
 		Container const & NamesList,
-		std::string Container::value_type::*name_p,
+		MemberVariable memberVariable,
 		int const NumOfNames,
 		bool & ErrorFound,
 		bool & IsBlank,
@@ -998,7 +998,7 @@ namespace InputProcessor {
 	{
 		ErrorFound = false;
 		if ( NumOfNames > 0 ) {
-			int const Found = FindItem( NameToVerify, NamesList, name_p, NumOfNames );
+			int const Found = FindItem( NameToVerify, NamesList, memberVariable, NumOfNames );
 			if ( Found != 0 ) {
 				ShowSevereError( StringToDisplay + ", duplicate name=" + NameToVerify );
 				ErrorFound = true;

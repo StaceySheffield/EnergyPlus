@@ -571,7 +571,7 @@ namespace RoomAirModelManager {
 		for ( i = 1; i <= NumOfZones; ++i ) {
 			if ( AirPatternZoneInfo( i ).IsUsed ) {
 				// first get return and exhaust air node index
-				found = FindItemInList( AirPatternZoneInfo( i ).ZoneName, ZoneEquipConfig, &EquipConfiguration::ZoneName );
+				found = FindItemInList( AirPatternZoneInfo( i ).ZoneName, ZoneEquipConfig, []( EquipConfiguration const& item ) { return item.ZoneName; } );
 				if ( found != 0 ) {
 
 					AirPatternZoneInfo( i ).ReturnAirNodeID = ZoneEquipConfig( found ).ReturnAirNode;
@@ -1140,7 +1140,7 @@ namespace RoomAirModelManager {
 
 			// Following depend on valid zone
 
-			Loop2 = FindItemInList( Zone( ZoneUCSDCV( Loop ).ZonePtr ).Name, MultizoneZoneData, &MultizoneZoneProp::ZoneName );
+			Loop2 = FindItemInList( Zone( ZoneUCSDCV( Loop ).ZonePtr ).Name, MultizoneZoneData, []( MultizoneZoneProp const& item ) { return item.ZoneName; } );
 			if ( Loop2 == 0 ) {
 				ShowSevereError( "Problem with " + cCurrentModuleObject + " = " + cAlphaArgs( 1 ) );
 				ShowContinueError( "AirflowNetwork airflow model must be active in this zone" );

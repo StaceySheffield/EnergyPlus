@@ -189,7 +189,7 @@ namespace DualDuct {
 
 		// Find the correct DamperNumber with the AirLoop & CompNum from AirLoop Derived Type
 		if ( CompIndex == 0 ) {
-			DamperNum = FindItemInList( CompName, Damper, &DamperDesignParams::DamperName );
+			DamperNum = FindItemInList( CompName, Damper, []( DamperDesignParams const& item ) { return item.DamperName; } );
 			if ( DamperNum == 0 ) {
 				ShowFatalError( "SimulateDualDuct: Damper not found=" + CompName );
 			}
@@ -338,7 +338,7 @@ namespace DualDuct {
 				DamperNum = DamperIndex;
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( AlphArray( 1 ), Damper, &DamperDesignParams::DamperName, DamperNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+				VerifyName( AlphArray( 1 ), Damper, []( DamperDesignParams const& item ) { return item.DamperName; }, DamperNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
@@ -405,7 +405,7 @@ namespace DualDuct {
 				DamperNum = DamperIndex + NumDualDuctConstVolDampers;
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( AlphArray( 1 ), Damper, &DamperDesignParams::DamperName, DamperNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+				VerifyName( AlphArray( 1 ), Damper, []( DamperDesignParams const& item ) { return item.DamperName; }, DamperNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
@@ -479,7 +479,7 @@ namespace DualDuct {
 				DamperNum = DamperIndex + NumDualDuctConstVolDampers + NumDualDuctVarVolDampers;
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( AlphArray( 1 ), Damper, &DamperDesignParams::DamperName, DamperNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+				VerifyName( AlphArray( 1 ), Damper, []( DamperDesignParams const& item ) { return item.DamperName; }, DamperNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) AlphArray( 1 ) = "xxxxx";

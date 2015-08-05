@@ -559,7 +559,7 @@ namespace OutputProcessor {
 
 		if ( NumOfReqVariables > 0 ) {
 			// Do a quick check
-			Item = FindItem( VarName, ReqRepVars, &ReqReportVariables::VarName );
+			Item = FindItem( VarName, ReqRepVars, []( ReqReportVariables const& item ) { return item.VarName; } );
 
 			NumExtraVars = 0;
 			ReportList = 0;
@@ -577,7 +577,7 @@ namespace OutputProcessor {
 						ReqRepVars( Loop ).Used = true;
 					}
 					if ( Loop < NumOfReqVariables ) {
-						Pos = FindItem( VarName, ReqRepVars( {Loop+1,NumOfReqVariables} ), &ReqReportVariables::VarName );
+						Pos = FindItem( VarName, ReqRepVars( {Loop+1,NumOfReqVariables} ), []( ReqReportVariables const& item ) { return item.VarName; } );
 						if ( Pos != 0 ) {
 							MinLook = min( MinLook, Loop + Pos );
 							MaxLook = max( MaxLook, Loop + Pos );
@@ -7725,7 +7725,7 @@ ReportingThisVariable( std::string const & RepVarName )
 	int Found;
 
 	BeingReported = false;
-	Found = FindItem( RepVarName, ReqRepVars, &ReqReportVariables::VarName );
+	Found = FindItem( RepVarName, ReqRepVars, []( ReqReportVariables const& item ) { return item.VarName; } );
 	if ( Found > 0 ) {
 		BeingReported = true;
 	}
@@ -8136,7 +8136,7 @@ AddToOutputVariableList(
 
 	int dup = 0;// for duplicate variable name
 	if ( NumVariablesForOutput > 0 ) {
-		dup = FindItemInList( VarName, DDVariableTypes, &VariableTypeForDDOutput::VarNameOnly, NumVariablesForOutput );
+		dup = FindItemInList( VarName, DDVariableTypes, []( VariableTypeForDDOutput const& item ) { return item.VarNameOnly; }, NumVariablesForOutput );
 	} else {
 		DDVariableTypes.allocate( LVarAllocInc );
 		MaxVariablesForOutput = LVarAllocInc;

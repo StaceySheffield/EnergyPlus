@@ -920,7 +920,7 @@ namespace DataPlant {
 
 		if ( MyPltLoopNum > 0 ) {
 			if ( NumPltSizInput > 0 ) {
-				MyPltSizNum = FindItemInList( PlantLoop( MyPltLoopNum ).Name, PlantSizData, &PlantSizingData::PlantLoopName );
+				MyPltSizNum = FindItemInList( PlantLoop( MyPltLoopNum ).Name, PlantSizData, []( PlantSizingData const& item ) { return item.PlantLoopName; } );
 			}
 			if ( MyPltSizNum == 0 ) {
 				if ( PrintErrorFlag ) {

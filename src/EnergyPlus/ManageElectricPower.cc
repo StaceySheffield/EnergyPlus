@@ -1664,7 +1664,7 @@ namespace ManageElectricPower {
 				} else {
 					// check if previous elec load center already uses this inverter.
 					if ( Count - 1 > 0 ) {
-						Found = FindItemInList( cAlphaArgs( 7 ), ElecLoadCenter, &ElectricPowerLoadCenter::InverterName, Count - 1 );
+						Found = FindItemInList( cAlphaArgs( 7 ), ElecLoadCenter, []( ElectricPowerLoadCenter const& item ) { return item.InverterName; }, Count - 1 );
 						if ( Found != 0 ) {
 							ShowSevereError( RoutineName + cCurrentModuleObject + "=\"" + cAlphaArgs( 1 ) + "\", invalid entry." );
 							ShowContinueError( "Invalid " + cAlphaFieldNames( 7 ) + " = " + cAlphaArgs( 7 ) );
@@ -1691,7 +1691,7 @@ namespace ManageElectricPower {
 				} else {
 					// check if previous elec load center already uses this storage.
 					if ( Count - 1 > 0 ) {
-						Found = FindItemInList( cAlphaArgs( 8 ), ElecLoadCenter, &ElectricPowerLoadCenter::StorageName, Count - 1 );
+						Found = FindItemInList( cAlphaArgs( 8 ), ElecLoadCenter, []( ElectricPowerLoadCenter const& item ) { return item.StorageName; }, Count - 1 );
 						if ( Found != 0 ) {
 							ShowSevereError( RoutineName + cCurrentModuleObject + "=\"" + cAlphaArgs( 1 ) + "\", invalid entry." );
 							ShowContinueError( "Invalid " + cAlphaFieldNames( 8 ) + " = " + cAlphaArgs( 8 ) );

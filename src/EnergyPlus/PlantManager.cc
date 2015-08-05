@@ -2985,7 +2985,7 @@ namespace PlantManager {
 		PlantSizNum = 0;
 		if ( PlantLoop( LoopNum ).PlantSizNum == 0 ) {
 			if ( NumPltSizInput > 0 ) {
-				PlantSizNum = FindItemInList( PlantLoop( LoopNum ).Name, PlantSizData, &PlantSizingData::PlantLoopName );
+				PlantSizNum = FindItemInList( PlantLoop( LoopNum ).Name, PlantSizData, []( PlantSizingData const& item ) { return item.PlantLoopName; } );
 				if ( PlantSizNum > 0 ) {
 					PlantLoop( LoopNum ).PlantSizNum = PlantSizNum;
 				}
@@ -3078,7 +3078,7 @@ namespace PlantManager {
 			// PlantSizData(PlantSizNum)%DesVolFlowRate = 0.0D0 ! DSU2
 		} else {
 			if ( NumPltSizInput > 0 ) {
-				PlantSizNum = FindItemInList( PlantLoop( LoopNum ).Name, PlantSizData, &PlantSizingData::PlantLoopName );
+				PlantSizNum = FindItemInList( PlantLoop( LoopNum ).Name, PlantSizData, []( PlantSizingData const& item ) { return item.PlantLoopName; } );
 			}
 		}
 		PlantLoop( LoopNum ).PlantSizNum = PlantSizNum;

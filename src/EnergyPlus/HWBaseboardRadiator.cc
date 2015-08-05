@@ -169,7 +169,7 @@ namespace HWBaseboardRadiator {
 
 		// Find the correct Baseboard Equipment
 		if ( CompIndex == 0 ) {
-			BaseboardNum = FindItemInList( EquipName, HWBaseboard, &HWBaseboardParams::EquipID );
+			BaseboardNum = FindItemInList( EquipName, HWBaseboard, []( HWBaseboardParams const& item ) { return item.EquipID; } );
 			if ( BaseboardNum == 0 ) {
 				ShowFatalError( "SimHWBaseboard: Unit not found=" + EquipName );
 			}
@@ -332,7 +332,7 @@ namespace HWBaseboardRadiator {
 
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( cAlphaArgs( 1 ), HWBaseboard, &HWBaseboardParams::EquipID, BaseboardNum, IsNotOK, IsBlank, cCMO_BBRadiator_Water + " Name" );
+			VerifyName( cAlphaArgs( 1 ), HWBaseboard, []( HWBaseboardParams const& item ) { return item.EquipID; }, BaseboardNum, IsNotOK, IsBlank, cCMO_BBRadiator_Water + " Name" );
 
 			if ( IsNotOK ) {
 				ErrorsFound = true;
@@ -1608,7 +1608,7 @@ namespace HWBaseboardRadiator {
 
 		// Find the correct baseboard
 		if ( CompIndex == 0 ) {
-			BaseboardNum = FindItemInList( BaseboardName, HWBaseboard, &HWBaseboardParams::EquipID );
+			BaseboardNum = FindItemInList( BaseboardName, HWBaseboard, []( HWBaseboardParams const& item ) { return item.EquipID; } );
 			if ( BaseboardNum == 0 ) {
 				ShowFatalError( "UpdateHWBaseboardPlantConnection: Specified baseboard not valid =" + BaseboardName );
 			}

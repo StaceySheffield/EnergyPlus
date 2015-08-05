@@ -175,7 +175,7 @@ namespace SteamBaseboardRadiator {
 
 		// Find the correct Baseboard Equipment
 		if ( CompIndex == 0 ) {
-			BaseboardNum = FindItemInList( EquipName, SteamBaseboard, &SteamBaseboardParams::EquipID );
+			BaseboardNum = FindItemInList( EquipName, SteamBaseboard, []( SteamBaseboardParams const& item ) { return item.EquipID; } );
 			if ( BaseboardNum == 0 ) {
 				ShowFatalError( "SimSteamBaseboard: Unit not found=" + EquipName );
 			}
@@ -335,7 +335,7 @@ namespace SteamBaseboardRadiator {
 
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( cAlphaArgs( 1 ), SteamBaseboard, &SteamBaseboardParams::EquipID, BaseboardNum, IsNotOK, IsBlank, cCMO_BBRadiator_Steam + " Name" );
+			VerifyName( cAlphaArgs( 1 ), SteamBaseboard, []( SteamBaseboardParams const& item ) { return item.EquipID; }, BaseboardNum, IsNotOK, IsBlank, cCMO_BBRadiator_Steam + " Name" );
 
 			if ( IsNotOK ) {
 				ErrorsFound = true;
@@ -1440,7 +1440,7 @@ namespace SteamBaseboardRadiator {
 
 		// Find the correct baseboard
 		if ( CompIndex == 0 ) {
-			BaseboardNum = FindItemInList( BaseboardName, SteamBaseboard, &SteamBaseboardParams::EquipID );
+			BaseboardNum = FindItemInList( BaseboardName, SteamBaseboard, []( SteamBaseboardParams const& item ) { return item.EquipID; } );
 			if ( BaseboardNum == 0 ) {
 				ShowFatalError( "UpdateSteamBaseboardPlantConnection: Specified baseboard not valid =" + BaseboardName );
 			}

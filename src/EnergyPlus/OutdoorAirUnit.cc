@@ -427,7 +427,7 @@ namespace OutdoorAirUnit {
 
 			//A5
 			OutAirUnit( OAUnitNum ).SFanName = cAlphaArgs( 5 );
-			VerifyName( cAlphaArgs( 5 ), OutAirUnit, &OAUnitData::SFanName, OAUnitNum - 1, IsNotOK, IsBlank, "OA Unit Supply Fan Name" );
+			VerifyName( cAlphaArgs( 5 ), OutAirUnit, []( OAUnitData const& item ) { return item.SFanName; }, OAUnitNum - 1, IsNotOK, IsBlank, "OA Unit Supply Fan Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) cAlphaArgs( 5 ) = "xxxxx";
@@ -456,7 +456,7 @@ namespace OutdoorAirUnit {
 				OutAirUnit( OAUnitNum ).ExtFan = false;
 			} else if ( ! lAlphaBlanks( 7 ) ) {
 				OutAirUnit( OAUnitNum ).ExtFanName = cAlphaArgs( 7 );
-				VerifyName( cAlphaArgs( 7 ), OutAirUnit, &OAUnitData::ExtFanName, OAUnitNum - 1, IsNotOK, IsBlank, "OA Unit Exhaust Fan Name" );
+				VerifyName( cAlphaArgs( 7 ), OutAirUnit, []( OAUnitData const& item ) { return item.ExtFanName; }, OAUnitNum - 1, IsNotOK, IsBlank, "OA Unit Exhaust Fan Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) cAlphaArgs( 7 ) = "xxxxx";
@@ -558,7 +558,7 @@ namespace OutdoorAirUnit {
 			}
 
 			//A16 : component list
-			VerifyName( cAlphaArgs( 16 ), OutAirUnit, &OAUnitData::ComponentListName, OAUnitNum - 1, IsNotOK, IsBlank, CurrentModuleObjects( CO_OAEqList ) + " Name" );
+			VerifyName( cAlphaArgs( 16 ), OutAirUnit, []( OAUnitData const& item ) { return item.ComponentListName; }, OAUnitNum - 1, IsNotOK, IsBlank, CurrentModuleObjects( CO_OAEqList ) + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) cAlphaArgs( 16 ) = "xxxxx";

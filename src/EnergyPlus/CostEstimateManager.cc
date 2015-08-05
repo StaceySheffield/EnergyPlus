@@ -421,7 +421,7 @@ namespace CostEstimateManager {
 					ErrorsFound = true;
 				}
 
-				thisChil = FindItem( CostLineItem( Item ).ParentObjName, ElectricChiller.ma( &ElectricChillerSpecs::Base ) );
+				thisChil = FindItem( CostLineItem( Item ).ParentObjName, ElectricChiller, []( ElectricChillerSpecs const& item ) { return item.Base.Name; } );
 				if ( thisChil == 0 ) {
 					ShowWarningError( "ComponentCost:LineItem: \"" + CostLineItem( Item ).LineName + "\", Chiller:Electric, invalid chiller specified." );
 					ShowContinueError( "Chiller Specified=\"" + CostLineItem( Item ).ParentObjName + "\", calculations will not be completed for this item." );
@@ -735,7 +735,7 @@ namespace CostEstimateManager {
 				}
 
 			} else if ( SELECT_CASE_var == "CHILLER:ELECTRIC" ) {
-				thisChil = FindItem( CostLineItem( Item ).ParentObjName, ElectricChiller.ma( &ElectricChillerSpecs::Base ) );
+				thisChil = FindItem( CostLineItem( Item ).ParentObjName, ElectricChiller, []( ElectricChillerSpecs const& item ) { return item.Base.Name; } );
 				if ( ( thisChil > 0 ) && ( CostLineItem( Item ).PerKiloWattCap > 0.0 ) ) {
 					CostLineItem( Item ).Qty = ElectricChiller( thisChil ).Base.NomCap / 1000.0;
 					CostLineItem( Item ).Units = "kW (tot cool cap.)";

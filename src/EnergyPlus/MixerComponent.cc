@@ -130,7 +130,7 @@ namespace MixerComponent {
 
 		// Find the correct MixerNumber
 		if ( CompIndex == 0 ) {
-			MixerNum = FindItemInList( CompName, MixerCond, &MixerConditions::MixerName );
+			MixerNum = FindItemInList( CompName, MixerCond, []( MixerConditions const& item ) { return item.MixerName; } );
 			if ( MixerNum == 0 ) {
 				ShowFatalError( "SimAirLoopMixer: Mixer not found=" + CompName );
 			}
@@ -244,7 +244,7 @@ namespace MixerComponent {
 
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( AlphArray( 1 ), MixerCond, &MixerConditions::MixerName, MixerNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+			VerifyName( AlphArray( 1 ), MixerCond, []( MixerConditions const& item ) { return item.MixerName; }, MixerNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
@@ -673,7 +673,7 @@ namespace MixerComponent {
 			GetInputFlag = false;
 		}
 
-		MixerIndex = FindItemInList( MixerName, MixerCond, &MixerConditions::MixerName );
+		MixerIndex = FindItemInList( MixerName, MixerCond, []( MixerConditions const& item ) { return item.MixerName; } );
 		if ( MixerIndex == 0 ) {
 			if ( ! ThisObjectType.empty() ) {
 				ShowSevereError( ThisObjectType + ", GetZoneMixerIndex: Zone Mixer not found=" + MixerName );

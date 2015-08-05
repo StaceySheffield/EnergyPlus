@@ -3790,7 +3790,7 @@ namespace SystemReports {
 		default:
 			found = 0;
 			if ( NumCompTypes > 0 ) {
-				found = FindItemInList( CompType, CompTypeErrors, &CompTypeError::CompType, NumCompTypes );
+				found = FindItemInList( CompType, CompTypeErrors, []( CompTypeError const& item ) { return item.CompType; }, NumCompTypes );
 			}
 			if ( found == 0 ) {
 				CompTypeErrors( ++NumCompTypes ).CompType = CompType;

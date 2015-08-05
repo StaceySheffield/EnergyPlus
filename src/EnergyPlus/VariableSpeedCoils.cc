@@ -1826,7 +1826,7 @@ namespace VariableSpeedCoils {
 			IsNotOK = false;
 			IsBlank = false;
 
-			VerifyName(AlphArray(1), VarSpeedCoil, &VariableSpeedCoilData::Name, DXCoilNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name");
+			VerifyName(AlphArray(1), VarSpeedCoil, []( VariableSpeedCoilData const& item ) { return item.Name; }, DXCoilNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 			if (IsNotOK) {
 				ErrorsFound = true;
 				if (IsBlank) AlphArray(1) = "xxxxx";

@@ -1799,7 +1799,7 @@ namespace PoweredInductionUnits {
 
 		YesNo = false;
 		if ( NumPIUs > 0 ) {
-			ItemNum = FindItemInList( CompName, PIU, &PowIndUnitData::MixerName );
+			ItemNum = FindItemInList( CompName, PIU, []( PowIndUnitData const& item ) { return item.MixerName; } );
 			if ( ItemNum > 0 ) YesNo = true;
 		}
 

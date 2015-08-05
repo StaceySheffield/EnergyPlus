@@ -370,7 +370,7 @@ namespace DataZoneEquipment {
 
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( AlphArray( 2 ), ZoneEquipConfig, &EquipConfiguration::EquipListName, ControlledZoneLoop - 1, IsNotOK, IsBlank, CurrentModuleObject + cAlphaFields( 2 ) );
+			VerifyName( AlphArray( 2 ), ZoneEquipConfig, []( EquipConfiguration const& item ) { return item.EquipListName; }, ControlledZoneLoop - 1, IsNotOK, IsBlank, CurrentModuleObject + cAlphaFields( 2 ) );
 			if ( IsNotOK ) {
 				ShowContinueError( "..another Controlled Zone has been assigned that " + cAlphaFields( 2 ) + '.' );
 				ErrorsFound = true;
@@ -700,7 +700,7 @@ namespace DataZoneEquipment {
 		//map ZoneEquipConfig%EquipListIndex to ZoneEquipList%Name
 
 		for ( ControlledZoneLoop = 1; ControlledZoneLoop <= NumOfZones; ++ControlledZoneLoop ) {
-			found = FindItemInList( ZoneEquipList( ControlledZoneLoop ).Name, ZoneEquipConfig, &EquipConfiguration::EquipListName );
+			found = FindItemInList( ZoneEquipList( ControlledZoneLoop ).Name, ZoneEquipConfig, []( EquipConfiguration const& item ) { return item.EquipListName; } );
 			if ( found > 0 ) ZoneEquipConfig( found ).EquipListIndex = ControlledZoneLoop;
 		} // end loop over controlled zones
 
@@ -990,7 +990,7 @@ namespace DataZoneEquipment {
 			ZoneEquipInputsFilled = true;
 		}
 
-		ControlledZoneIndex = FindItemInList( ZoneName, ZoneEquipConfig, &EquipConfiguration::ZoneName );
+		ControlledZoneIndex = FindItemInList( ZoneName, ZoneEquipConfig, []( EquipConfiguration const& item ) { return item.ZoneName; } );
 
 		return ControlledZoneIndex;
 
@@ -1105,7 +1105,7 @@ namespace DataZoneEquipment {
 			ZoneEquipInputsFilled = true;
 		}
 
-		ControlledZoneIndex = FindItemInList( ZoneName, ZoneEquipConfig, &EquipConfiguration::ZoneName );
+		ControlledZoneIndex = FindItemInList( ZoneName, ZoneEquipConfig, []( EquipConfiguration const& item ) { return item.ZoneName; } );
 		SystemZoneNodeNumber = 0; // default is not found
 		if ( ControlledZoneIndex > 0 ) {
 			if ( ZoneEquipConfig( ControlledZoneIndex ).ActualZoneNum > 0 ) {
@@ -1163,7 +1163,7 @@ namespace DataZoneEquipment {
 			ZoneEquipInputsFilled = true;
 		}
 
-		ControlledZoneIndex = FindItemInList( ZoneName, ZoneEquipConfig, &EquipConfiguration::ZoneName );
+		ControlledZoneIndex = FindItemInList( ZoneName, ZoneEquipConfig, []( EquipConfiguration const& item ) { return item.ZoneName; } );
 		ReturnAirNodeNumber = 0; // default is not found
 		if ( ControlledZoneIndex > 0 ) {
 			if ( ZoneEquipConfig( ControlledZoneIndex ).ActualZoneNum > 0 ) {

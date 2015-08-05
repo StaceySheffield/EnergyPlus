@@ -223,7 +223,7 @@ namespace SingleDuct {
 
 		// Find the correct SysNumber with the Component Name
 		if ( CompIndex == 0 ) {
-			SysNum = FindItemInList( CompName, Sys, &SysDesignParams::SysName );
+			SysNum = FindItemInList( CompName, Sys, []( SysDesignParams const& item ) { return item.SysName; } );
 			if ( SysNum == 0 ) {
 				ShowFatalError( "SimulateSingleDuct: System not found=" + CompName );
 			}
@@ -426,7 +426,7 @@ namespace SingleDuct {
 			SysNum = SysIndex;
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( Alphas( 1 ), Sys, &SysDesignParams::SysName, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+			VerifyName( Alphas( 1 ), Sys, []( SysDesignParams const& item ) { return item.SysName; }, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) Alphas( 1 ) = "xxxxx";
@@ -637,7 +637,7 @@ namespace SingleDuct {
 			SysNum = SysIndex + NumVAVSys;
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( Alphas( 1 ), Sys, &SysDesignParams::SysName, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+			VerifyName( Alphas( 1 ), Sys, []( SysDesignParams const& item ) { return item.SysName; }, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) Alphas( 1 ) = "xxxxx";
@@ -800,7 +800,7 @@ namespace SingleDuct {
 			SysNum = SysIndex + NumVAVSys + NumCBVAVSys;
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( Alphas( 1 ), Sys, &SysDesignParams::SysName, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+			VerifyName( Alphas( 1 ), Sys, []( SysDesignParams const& item ) { return item.SysName; }, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) Alphas( 1 ) = "xxxxx";
@@ -949,7 +949,7 @@ namespace SingleDuct {
 			SysNum = SysIndex + NumVAVSys + NumCBVAVSys + NumConstVolSys;
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( Alphas( 1 ), Sys, &SysDesignParams::SysName, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+			VerifyName( Alphas( 1 ), Sys, []( SysDesignParams const& item ) { return item.SysName; }, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) Alphas( 1 ) = "xxxxx";
@@ -1076,7 +1076,7 @@ namespace SingleDuct {
 			SysNum = SysIndex + NumVAVSys + NumCBVAVSys + NumConstVolSys + NumNoRHVAVSys;
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( Alphas( 1 ), Sys, &SysDesignParams::SysName, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+			VerifyName( Alphas( 1 ), Sys, []( SysDesignParams const& item ) { return item.SysName; }, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) Alphas( 1 ) = "xxxxx";
@@ -1158,7 +1158,7 @@ namespace SingleDuct {
 			SysNum = SysIndex + NumVAVSys + NumCBVAVSys + NumConstVolSys + NumNoRHVAVSys + NumNoRHCBVAVSys;
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( Alphas( 1 ), Sys, &SysDesignParams::SysName, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+			VerifyName( Alphas( 1 ), Sys, []( SysDesignParams const& item ) { return item.SysName; }, SysNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) Alphas( 1 ) = "xxxxx";
@@ -4230,7 +4230,7 @@ namespace SingleDuct {
 			GetInputFlag = false;
 		}
 
-		SDSIndex = FindItemInList( SDSName, Sys, &SysDesignParams::SysName );
+		SDSIndex = FindItemInList( SDSName, Sys, []( SysDesignParams const& item ) { return item.SysName; } );
 		if ( SDSIndex == 0 ) {
 			if ( present( ThisObjectType ) ) {
 				ShowSevereError( ThisObjectType() + ", GetHVACSingleDuctSysIndex: Single duct system not found=" + SDSName );
@@ -4953,7 +4953,7 @@ namespace SingleDuct {
 			return;
 		}
 
-		ATMixerIndex = FindItemInList( ZoneEquipName, SysATMixer, &AirTerminalMixerData::ZoneHVACUnitName );
+		ATMixerIndex = FindItemInList( ZoneEquipName, SysATMixer, []( AirTerminalMixerData const& item ) { return item.ZoneHVACUnitName; } );
 		if ( ATMixerIndex > 0 ) {
 			ATMixerNum = ATMixerIndex;
 			ATMixerName = SysATMixer( ATMixerIndex ).Name;

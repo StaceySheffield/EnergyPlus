@@ -5211,7 +5211,7 @@ Label9999: ;
 			if ( ! lAlphaFieldBlanks( 1 ) ) {
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( cAlphaArgs( 1 ), RunPeriodInput, &RunPeriodData::Title, Count, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+				VerifyName( cAlphaArgs( 1 ), RunPeriodInput, []( RunPeriodData const& item ) { return item.Title; }, Count, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) cAlphaArgs( 1 ) = "xxxxx";
@@ -5391,7 +5391,7 @@ Label9999: ;
 			if ( ! lAlphaFieldBlanks( 1 ) ) {
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( cAlphaArgs( 1 ), RunPeriodInput, &RunPeriodData::Title, Count, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+				VerifyName( cAlphaArgs( 1 ), RunPeriodInput, []( RunPeriodData const& item ) { return item.Title; }, Count, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) cAlphaArgs( 1 ) = "xxxxx";
@@ -5632,7 +5632,7 @@ Label9999: ;
 
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( cAlphaArgs( 1 ), RunPeriodDesignInput, &RunPeriodData::Title, Count, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+			VerifyName( cAlphaArgs( 1 ), RunPeriodDesignInput, []( RunPeriodData const& item ) { return item.Title; }, Count, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) cAlphaArgs( 1 ) = "xxxxx";
@@ -5719,7 +5719,7 @@ Label9999: ;
 
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( cAlphaArgs( 1 ), RunPeriodDesignInput, &RunPeriodData::Title, Count, IsNotOK, IsBlank, cCurrentModuleObject + " Title" );
+			VerifyName( cAlphaArgs( 1 ), RunPeriodDesignInput, []( RunPeriodData const& item ) { return item.Title; }, Count, IsNotOK, IsBlank, cCurrentModuleObject + " Title" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) cAlphaArgs( 1 ) = "xxxxx";
@@ -5730,7 +5730,7 @@ Label9999: ;
 
 			// Period Selection
 			if ( ! lAlphaFieldBlanks( 2 ) ) {
-				WhichPeriod = FindItem( cAlphaArgs( 2 ), TypicalExtremePeriods, &TypicalExtremeData::MatchValue );
+				WhichPeriod = FindItem( cAlphaArgs( 2 ), TypicalExtremePeriods, []( TypicalExtremeData const& item ) { return item.MatchValue; } );
 				if ( WhichPeriod != 0 ) {
 					RunPeriodDesignInput( Count ).StartDay = TypicalExtremePeriods( WhichPeriod ).StartDay;
 					RunPeriodDesignInput( Count ).StartMonth = TypicalExtremePeriods( WhichPeriod ).StartMonth;
@@ -5740,7 +5740,7 @@ Label9999: ;
 					RunPeriodDesignInput( Count ).EndDate = TypicalExtremePeriods( WhichPeriod ).EndJDay;
 					RunPeriodDesignInput( Count ).TotalDays = TypicalExtremePeriods( WhichPeriod ).TotalDays;
 				} else {
-					WhichPeriod = FindItem( cAlphaArgs( 2 ), TypicalExtremePeriods, &TypicalExtremeData::MatchValue1 );
+					WhichPeriod = FindItem( cAlphaArgs( 2 ), TypicalExtremePeriods, []( TypicalExtremeData const& item ) { return item.MatchValue1; } );
 					if ( WhichPeriod != 0 ) {
 						RunPeriodDesignInput( Count ).StartDay = TypicalExtremePeriods( WhichPeriod ).StartDay;
 						RunPeriodDesignInput( Count ).StartMonth = TypicalExtremePeriods( WhichPeriod ).StartMonth;
@@ -5751,7 +5751,7 @@ Label9999: ;
 						RunPeriodDesignInput( Count ).TotalDays = TypicalExtremePeriods( WhichPeriod ).TotalDays;
 						ShowWarningError( cCurrentModuleObject + ": object=" + RunPeriodDesignInput( Count ).Title + ' ' + cAlphaFieldNames( 2 ) + '=' + cAlphaArgs( 2 ) + " matched to " + TypicalExtremePeriods( WhichPeriod ).MatchValue );
 					} else {
-						WhichPeriod = FindItem( cAlphaArgs( 2 ), TypicalExtremePeriods, &TypicalExtremeData::MatchValue2 );
+						WhichPeriod = FindItem( cAlphaArgs( 2 ), TypicalExtremePeriods, []( TypicalExtremeData const& item ) { return item.MatchValue2; } );
 						if ( WhichPeriod != 0 ) {
 							RunPeriodDesignInput( Count ).StartDay = TypicalExtremePeriods( WhichPeriod ).StartDay;
 							RunPeriodDesignInput( Count ).StartMonth = TypicalExtremePeriods( WhichPeriod ).StartMonth;
@@ -6263,7 +6263,7 @@ Label9999: ;
 			//   A1, \field Name
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( cAlphaArgs( 1 ), DesDayInput, &DesignDayData::Title, EnvrnNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+			VerifyName( cAlphaArgs( 1 ), DesDayInput, []( DesignDayData const& item ) { return item.Title; }, EnvrnNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) cAlphaArgs( 1 ) = "xxxxx";
@@ -7003,7 +7003,7 @@ Label9999: ;
 					continue;
 				}
 			} else { // really a name
-				Found = FindItemInList( cAlphaArgs( 1 ), Environment, &EnvironmentData::Title );
+				Found = FindItemInList( cAlphaArgs( 1 ), Environment, []( EnvironmentData const& item ) { return item.Title; } );
 				envFound = Found;
 				if ( Found == 0 ) {
 					ShowSevereError( RoutineName + cCurrentModuleObject + "=\"" + cAlphaArgs( 1 ) + "\", invalid Environment Name referenced." );

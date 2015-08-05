@@ -146,7 +146,7 @@ namespace ZonePlenum {
 		if ( iCompType == ZoneReturnPlenum_Type ) { // 'AirLoopHVAC:ReturnPlenum'
 			// Find the correct ZonePlenumNumber
 			if ( CompIndex == 0 ) {
-				ZonePlenumNum = FindItemInList( CompName, ZoneRetPlenCond, &ZoneReturnPlenumConditions::ZonePlenumName );
+				ZonePlenumNum = FindItemInList( CompName, ZoneRetPlenCond, []( ZoneReturnPlenumConditions const& item ) { return item.ZonePlenumName; } );
 				if ( ZonePlenumNum == 0 ) {
 					ShowFatalError( "SimAirZonePlenum: AirLoopHVAC:ReturnPlenum not found=" + CompName );
 				}
@@ -175,7 +175,7 @@ namespace ZonePlenum {
 		} else if ( iCompType == ZoneSupplyPlenum_Type ) { // 'AirLoopHVAC:SupplyPlenum'
 			// Find the correct ZonePlenumNumber
 			if ( CompIndex == 0 ) {
-				ZonePlenumNum = FindItemInList( CompName, ZoneSupPlenCond, &ZoneSupplyPlenumConditions::ZonePlenumName );
+				ZonePlenumNum = FindItemInList( CompName, ZoneSupPlenCond, []( ZoneSupplyPlenumConditions const& item ) { return item.ZonePlenumName; } );
 				if ( ZonePlenumNum == 0 ) {
 					ShowFatalError( "SimAirZonePlenum: AirLoopHVAC:SupplyPlenum not found=" + CompName );
 				}
@@ -330,7 +330,7 @@ namespace ZonePlenum {
 			GetObjectItem( CurrentModuleObject, ZonePlenumNum, AlphArray, NumAlphas, NumArray, NumNums, IOStat, lNumericBlanks, lAlphaBlanks, cAlphaFields, cNumericFields );
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( AlphArray( 1 ), ZoneRetPlenCond, &ZoneReturnPlenumConditions::ZonePlenumName, ZonePlenumNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+			VerifyName( AlphArray( 1 ), ZoneRetPlenCond, []( ZoneReturnPlenumConditions const& item ) { return item.ZonePlenumName; }, ZonePlenumNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
@@ -338,7 +338,7 @@ namespace ZonePlenum {
 			ZoneRetPlenCond( ZonePlenumNum ).ZonePlenumName = AlphArray( 1 );
 
 			// Check if this zone is also used in another return plenum
-			IOStat = FindItemInList( AlphArray( 2 ), ZoneRetPlenCond, &ZoneReturnPlenumConditions::ZoneName, ZonePlenumNum - 1 );
+			IOStat = FindItemInList( AlphArray( 2 ), ZoneRetPlenCond, []( ZoneReturnPlenumConditions const& item ) { return item.ZoneName; }, ZonePlenumNum - 1 );
 			if ( IOStat != 0 ) {
 				ShowSevereError( RoutineName + cAlphaFields( 2 ) + " \"" + AlphArray( 2 ) + "\" is used more than once as a " + CurrentModuleObject + '.' );
 				ShowContinueError( "..Only one " + CurrentModuleObject + " object may be connected to a given zone." );
@@ -354,7 +354,7 @@ namespace ZonePlenum {
 				continue;
 			}
 			//  Check if this zone is used as a controlled zone
-			ZoneEquipConfigLoop = FindItemInList( AlphArray( 2 ), ZoneEquipConfig, &EquipConfiguration::ZoneName );
+			ZoneEquipConfigLoop = FindItemInList( AlphArray( 2 ), ZoneEquipConfig, []( EquipConfiguration const& item ) { return item.ZoneName; } );
 			if ( ZoneEquipConfigLoop != 0 ) {
 				ShowSevereError( RoutineName + cAlphaFields( 2 ) + " \"" + AlphArray( 2 ) + "\" is a controlled zone. It cannot be used as a " + CurrentModuleObject );
 				ShowContinueError( "..occurs in " + CurrentModuleObject + " = " + AlphArray( 1 ) );
@@ -457,7 +457,7 @@ namespace ZonePlenum {
 
 			IsNotOK = false;
 			IsBlank = false;
-			VerifyName( AlphArray( 1 ), ZoneSupPlenCond, &ZoneSupplyPlenumConditions::ZonePlenumName, ZonePlenumNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
+			VerifyName( AlphArray( 1 ), ZoneSupPlenCond, []( ZoneSupplyPlenumConditions const& item ) { return item.ZonePlenumName; }, ZonePlenumNum - 1, IsNotOK, IsBlank, CurrentModuleObject + " Name" );
 			if ( IsNotOK ) {
 				ErrorsFound = true;
 				if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
@@ -465,7 +465,7 @@ namespace ZonePlenum {
 			ZoneSupPlenCond( ZonePlenumNum ).ZonePlenumName = AlphArray( 1 );
 
 			// Check if this zone is also used in another plenum
-			IOStat = FindItemInList( AlphArray( 2 ), ZoneSupPlenCond, &ZoneSupplyPlenumConditions::ZoneName, ZonePlenumNum - 1 );
+			IOStat = FindItemInList( AlphArray( 2 ), ZoneSupPlenCond, []( ZoneSupplyPlenumConditions const& item ) { return item.ZoneName; }, ZonePlenumNum - 1 );
 			if ( IOStat != 0 ) {
 				ShowSevereError( RoutineName + cAlphaFields( 2 ) + " \"" + AlphArray( 2 ) + "\" is used more than once as a " + CurrentModuleObject + '.' );
 				ShowContinueError( "..Only one " + CurrentModuleObject + " object may be connected to a given zone." );
@@ -473,7 +473,7 @@ namespace ZonePlenum {
 				ErrorsFound = true;
 			}
 			if ( NumZoneReturnPlenums > 0 ) { // Check if this zone is also used in another plenum
-				IOStat = FindItemInList( AlphArray( 2 ), ZoneRetPlenCond, &ZoneReturnPlenumConditions::ZoneName );
+				IOStat = FindItemInList( AlphArray( 2 ), ZoneRetPlenCond, []( ZoneReturnPlenumConditions const& item ) { return item.ZoneName; } );
 				if ( IOStat != 0 ) {
 					ShowSevereError( RoutineName + cAlphaFields( 2 ) + " \"" + AlphArray( 2 ) + "\" is used more than once as a " + CurrentModuleObject + " or AirLoopHVAC:ReturnPlenum." );
 					ShowContinueError( "..Only one " + CurrentModuleObject + " or AirLoopHVAC:ReturnPlenum object may be connected to a given zone." );
@@ -491,7 +491,7 @@ namespace ZonePlenum {
 			}
 			//  Check if this zone is used as a controlled zone
 			if ( any( ZoneEquipConfig.IsControlled() ) ) {
-				ZoneEquipConfigLoop = FindItemInList( AlphArray( 2 ), ZoneEquipConfig, &EquipConfiguration::ZoneName );
+				ZoneEquipConfigLoop = FindItemInList( AlphArray( 2 ), ZoneEquipConfig, []( EquipConfiguration const& item ) { return item.ZoneName; } );
 				if ( ZoneEquipConfigLoop != 0 ) {
 					ShowSevereError( RoutineName + cAlphaFields( 2 ) + " \"" + AlphArray( 2 ) + "\" is a controlled zone. It cannot be used as a " + CurrentModuleObject + " or AirLoopHVAC:ReturnPlenum." );
 					ShowContinueError( "..occurs in " + CurrentModuleObject + " = " + AlphArray( 1 ) );

@@ -1888,7 +1888,7 @@ namespace HVACHXAssistedCoolingCoil {
 		Found = false;
 
 		if ( TotalNumHXAssistedCoils > 0 ) {
-			WhichCoil = FindItem( HXName, HXAssistedCoil, &HXAssistedCoilParameters::HeatExchangerName );
+			WhichCoil = FindItem( HXName, HXAssistedCoil, []( HXAssistedCoilParameters const& item ) { return item.HeatExchangerName; } );
 		} else {
 			WhichCoil = 0;
 		}

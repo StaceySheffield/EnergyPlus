@@ -1396,7 +1396,7 @@ namespace HVACSingleDuctInduc {
 
 		YesNo = false;
 		if ( NumIndUnits > 0 ) {
-			ItemNum = FindItemInList( CompName, IndUnit, &IndUnitData::MixerName );
+			ItemNum = FindItemInList( CompName, IndUnit, []( IndUnitData const& item ) { return item.MixerName; } );
 			if ( ItemNum > 0 ) YesNo = true;
 		}
 

@@ -1315,8 +1315,8 @@ namespace EMSManager {
 			int FoundControlType;
 			for ( int ActuatorLoop = 1; ActuatorLoop <= numEMSActuatorsAvailable; ++ActuatorLoop ) {
 				if ( ActuatorLoop + 1 <= numEMSActuatorsAvailable ) {
-					FoundTypeName = FindItemInList( EMSActuatorAvailable( ActuatorLoop ).ComponentTypeName, EMSActuatorAvailable( {ActuatorLoop + 1,numEMSActuatorsAvailable} ), &EMSActuatorAvailableType::ComponentTypeName, numEMSActuatorsAvailable - ( ActuatorLoop + 1 ) );
-					FoundControlType = FindItemInList( EMSActuatorAvailable( ActuatorLoop ).ControlTypeName, EMSActuatorAvailable( {ActuatorLoop + 1,numEMSActuatorsAvailable} ), &EMSActuatorAvailableType::ControlTypeName, numEMSActuatorsAvailable - ( ActuatorLoop + 1 ) );
+					FoundTypeName = FindItemInList( EMSActuatorAvailable( ActuatorLoop ).ComponentTypeName, EMSActuatorAvailable( {ActuatorLoop + 1,numEMSActuatorsAvailable} ), []( EMSActuatorAvailableType const& item ) { return item.ComponentTypeName; }, numEMSActuatorsAvailable - ( ActuatorLoop + 1 ) );
+					FoundControlType = FindItemInList( EMSActuatorAvailable( ActuatorLoop ).ControlTypeName, EMSActuatorAvailable( {ActuatorLoop + 1,numEMSActuatorsAvailable} ), []( EMSActuatorAvailableType const& item ) { return item.ControlTypeName; }, numEMSActuatorsAvailable - ( ActuatorLoop + 1 ) );
 				} else {
 					FoundTypeName = 1;
 					FoundControlType = 1;
@@ -1379,7 +1379,7 @@ namespace EMSManager {
 			for ( int InternalDataLoop = 1; InternalDataLoop <= numEMSInternalVarsAvailable; ++InternalDataLoop ) {
 				int Found( 0 );
 				if ( InternalDataLoop + 1 <= numEMSInternalVarsAvailable ) {
-					Found = FindItemInList( EMSInternalVarsAvailable( InternalDataLoop ).DataTypeName, EMSInternalVarsAvailable( {InternalDataLoop + 1,numEMSInternalVarsAvailable} ), &InternalVarsAvailableType::DataTypeName, numEMSInternalVarsAvailable - ( InternalDataLoop + 1 ) );
+					Found = FindItemInList( EMSInternalVarsAvailable( InternalDataLoop ).DataTypeName, EMSInternalVarsAvailable( {InternalDataLoop + 1,numEMSInternalVarsAvailable} ), []( InternalVarsAvailableType const& item ) { return item.DataTypeName; }, numEMSInternalVarsAvailable - ( InternalDataLoop + 1 ) );
 				}
 				if ( Found == 0 ) {
 					gio::write( OutputEMSFileUnitNum, fmtA ) << "EnergyManagementSystem:InternalVariable Available, *," + EMSInternalVarsAvailable( InternalDataLoop ).DataTypeName + ',' + EMSInternalVarsAvailable( InternalDataLoop ).Units;

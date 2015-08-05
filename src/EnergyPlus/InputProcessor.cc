@@ -1451,7 +1451,7 @@ namespace InputProcessor {
 			}
 			if ( Found != 0 ) {
 				if ( ObjectDef( Found ).ObsPtr > 0 ) {
-					TFound = FindItemInList( SqueezedObject, RepObjects, &SecretObjects::OldName );
+					TFound = FindItemInList( SqueezedObject, RepObjects, []( SecretObjects const& item ) { return item.OldName; } );
 					if ( TFound != 0 ) {
 						if ( RepObjects( TFound ).Transitioned ) {
 							if ( ! RepObjects( TFound ).Used ) ShowWarningError( "IP: Objects=\"" + stripped( ProposedObject ) + "\" are being transitioned to this object=\"" + RepObjects( TFound ).NewName + "\"" );
@@ -1482,7 +1482,7 @@ namespace InputProcessor {
 			TestingObject = false;
 			if ( Found == 0 ) {
 				// Check to see if it's a "secret" object
-				Found = FindItemInList( SqueezedObject, RepObjects, &SecretObjects::OldName );
+				Found = FindItemInList( SqueezedObject, RepObjects, []( SecretObjects const& item ) { return item.OldName; } );
 				if ( Found == 0 ) {
 					ShowSevereError( "IP: IDF line~" + IPTrimSigDigits( NumLines ) + " Did not find \"" + stripped( ProposedObject ) + "\" in list of Objects", EchoInputFile );
 					// Will need to parse to next ;
@@ -1546,7 +1546,7 @@ namespace InputProcessor {
 					++NumMiscErrorsFound;
 				}
 				if ( ObjectDef( Found ).ObsPtr > 0 ) {
-					TFound = FindItemInList( SqueezedObject, RepObjects, &SecretObjects::OldName );
+					TFound = FindItemInList( SqueezedObject, RepObjects, []( SecretObjects const& item ) { return item.OldName; } );
 					if ( TFound == 0 ) {
 						ShowWarningError( "IP: IDF line~" + IPTrimSigDigits( NumLines ) + " Obsolete object=" + stripped( ProposedObject ) + ", encountered.  Should be replaced with new object=" + ObsoleteObjectsRepNames( ObjectDef( Found ).ObsPtr ) );
 					} else if ( ! RepObjects( TFound ).Used && RepObjects( TFound ).Transitioned ) {

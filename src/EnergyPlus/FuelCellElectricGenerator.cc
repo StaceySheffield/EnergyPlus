@@ -315,13 +315,13 @@ namespace FuelCellElectricGenerator {
 
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( AlphArray( 1 ), FuelCell.ma( &FCDataStruct::FCPM ), FCPMNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+				VerifyName( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.FCPM.Name; }, FCPMNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
 				}
 
-				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, &FCDataStruct::NameFCPM );
+				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.NameFCPM; } );
 				if ( thisFuelCell > 0 ) { //cr9323
 
 					FuelCell( thisFuelCell ).FCPM.Name = AlphArray( 1 );
@@ -441,13 +441,13 @@ namespace FuelCellElectricGenerator {
 
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( AlphArray( 1 ), FuelCell.ma( &FCDataStruct::AirSup ), FCAirSupNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+				VerifyName( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.AirSup.Name; }, FCAirSupNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
 				}
 
-				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, &FCDataStruct::NameFCAirSup );
+				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.NameFCAirSup; } );
 				if ( thisFuelCell > 0 ) {
 
 					FuelCell( thisFuelCell ).AirSup.Name = AlphArray( 1 );
@@ -599,7 +599,7 @@ namespace FuelCellElectricGenerator {
 
 					thisName = FuelCell( GeneratorNum ).AirSup.ConstitName( i );
 
-					thisGasID = FindItem( thisName, GasPhaseThermoChemistryData, &GasPropertyDataStruct::ConstituentName );
+					thisGasID = FindItem( thisName, GasPhaseThermoChemistryData, []( GasPropertyDataStruct const& item ) { return item.ConstituentName; } );
 
 					FuelCell( GeneratorNum ).AirSup.GasLibID( i ) = thisGasID;
 
@@ -626,13 +626,13 @@ namespace FuelCellElectricGenerator {
 
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( AlphArray( 1 ), FuelCell.ma( &FCDataStruct::WaterSup ), FCWaterSupNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+				VerifyName( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.WaterSup.Name; }, FCWaterSupNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
 				}
 
-				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, &FCDataStruct::NameFCWaterSup );
+				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.NameFCWaterSup; } );
 				if ( thisFuelCell > 0 ) {
 					//  this is only the first instance of a FuelCell generator using this type of Water supply module
 					FuelCell( thisFuelCell ).WaterSup.Name = AlphArray( 1 );
@@ -711,13 +711,13 @@ namespace FuelCellElectricGenerator {
 
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( AlphArray( 1 ), FuelCell.ma( &FCDataStruct::AuxilHeat ), FCAuxHeatNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+				VerifyName( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.AuxilHeat.Name; }, FCAuxHeatNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
 				}
 
-				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, &FCDataStruct::NameFCAuxilHeat );
+				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.NameFCAuxilHeat; } );
 				if ( thisFuelCell > 0 ) {
 					FuelCell( thisFuelCell ).AuxilHeat.Name = AlphArray( 1 );
 
@@ -779,13 +779,13 @@ namespace FuelCellElectricGenerator {
 
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( AlphArray( 1 ), FuelCell.ma( &FCDataStruct::ExhaustHX ), FCHXNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+				VerifyName( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.ExhaustHX.Name; }, FCHXNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
 				}
 
-				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, &FCDataStruct::NameExhaustHX );
+				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.NameExhaustHX; } );
 				if ( thisFuelCell > 0 ) {
 					FuelCell( thisFuelCell ).ExhaustHX.Name = AlphArray( 1 );
 					FuelCell( thisFuelCell ).ExhaustHX.WaterInNodeName = AlphArray( 2 );
@@ -856,13 +856,13 @@ namespace FuelCellElectricGenerator {
 
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( AlphArray( 1 ), FuelCell.ma( &FCDataStruct::ElecStorage ), StorageNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+				VerifyName( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.ElecStorage.Name; }, StorageNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
 				}
 
-				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, &FCDataStruct::NameElecStorage );
+				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.NameElecStorage; } );
 				if ( thisFuelCell > 0 ) {
 					FuelCell( thisFuelCell ).ElecStorage.Name = AlphArray( 1 );
 
@@ -910,13 +910,13 @@ namespace FuelCellElectricGenerator {
 
 				IsNotOK = false;
 				IsBlank = false;
-				VerifyName( AlphArray( 1 ), FuelCell.ma( &FCDataStruct::Inverter ), FCPCUNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+				VerifyName( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.Inverter.Name; }, FCPCUNum - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 				if ( IsNotOK ) {
 					ErrorsFound = true;
 					if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
 				}
 
-				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, &FCDataStruct::NameInverter );
+				thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.NameInverter; } );
 				if ( thisFuelCell > 0 ) {
 					FuelCell( thisFuelCell ).Inverter.Name = AlphArray( 1 );
 
@@ -961,12 +961,12 @@ namespace FuelCellElectricGenerator {
 
 					IsNotOK = false;
 					IsBlank = false;
-					VerifyName( AlphArray( 1 ), FuelCell.ma( &FCDataStruct::StackCooler ), NumFCStackCoolers - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
+					VerifyName( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.StackCooler.Name; }, NumFCStackCoolers - 1, IsNotOK, IsBlank, cCurrentModuleObject + " Name" );
 					if ( IsNotOK ) {
 						ErrorsFound = true;
 						if ( IsBlank ) AlphArray( 1 ) = "xxxxx";
 					}
-					thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, &FCDataStruct::NameStackCooler );
+					thisFuelCell = FindItemInList( AlphArray( 1 ), FuelCell, []( FCDataStruct const& item ) { return item.NameStackCooler; } );
 					if ( thisFuelCell > 0 ) {
 						FuelCell( thisFuelCell ).StackCooler.Name = AlphArray( 1 );
 						FuelCell( thisFuelCell ).StackCooler.WaterInNodeName = AlphArray( 2 );
@@ -3671,9 +3671,9 @@ namespace FuelCellElectricGenerator {
 
 		if ( InitLoopEquip ) {
 			if ( CompTypeNum == TypeOf_Generator_FCExhaust ) {
-				CompNum = FindItemInList( CompName, FuelCell, &FCDataStruct::NameExhaustHX );
+				CompNum = FindItemInList( CompName, FuelCell, []( FCDataStruct const& item ) { return item.NameExhaustHX; } );
 			} else if ( CompTypeNum == TypeOf_Generator_FCStackCooler ) {
-				CompNum = FindItemInList( CompName, FuelCell, &FCDataStruct::NameStackCooler );
+				CompNum = FindItemInList( CompName, FuelCell, []( FCDataStruct const& item ) { return item.NameStackCooler; } );
 			}
 			if ( CompNum == 0 ) {
 				ShowFatalError( "SimFuelCellPlantHeatRecovery: Fuel Cell Generator Unit not found=" + CompName );
